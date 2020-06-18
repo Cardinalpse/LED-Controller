@@ -1,0 +1,97 @@
+int WARN = PB1; // WARN Trigger
+int LEFT = PB2; // LEFT Trigger
+int RIGHT = PB3; // RIGHT Trigger
+
+int L1 = PB4; // L1 Output
+int L2 = PB5; // L2 Output
+int L3 = PB6; // L3 Output
+int L4 = PB7; // L4 Output
+int R5 = PB8; // R5 Output
+int R6 = PB9; // R6 Output
+int R7 = PB10; // R7 Output
+int R8 = PB11; // R8 Output
+
+byte Stateread = 0;// Keeps track of buttons pushed
+
+void WARNMode()
+{
+  // code
+
+}
+
+void LEFTMode()
+{
+  // code
+}
+
+void RIGHTMode()
+{
+  // code
+}
+
+
+void CENTERMode()
+{
+  // code
+}
+
+
+void setup() {
+	pinMode(WARN, INPUT_PULLUP);
+	pinMode(LEFT, INPUT_PULLUP);
+	pinMode(RIGHT, INPUT_PULLUP);
+	pinMode(L1, OUTPUT);
+	pinMode(L2, OUTPUT);
+	pinMode(L3, OUTPUT);
+	pinMode(L4, OUTPUT);
+	pinMode(R5, OUTPUT);
+	pinMode(R6, OUTPUT);
+	pinMode(R7, OUTPUT);
+	pinMode(R8, OUTPUT);
+	Serial.begin(9600);
+
+}
+
+
+void loop() {
+
+  if (digitalRead(WARN) || digitalRead(LEFT) || digitalRead(RIGHT) == LOW) {   
+    Stateread = 0;
+    if (digitalRead(WARN) == LOW) {  //If WARN reads HIGH, then add 1 to the Stateread variable
+      Stateread = Stateread + 1;
+    }
+    if (digitalRead(LEFT) == LOW) {  //If LEFT reads HIGH, then add 2 to the Stateread variable
+      Stateread = Stateread + 2;
+    }
+	 if (digitalRead(RIGHT) == LOW) {  //If RIGHT reads HIGH, then add 4 to the Stateread variable
+      Stateread = Stateread + 4;
+
+    // do something different depending on the range value:
+    switch (Stateread) {
+      case 1:    // WARN TRIGGER
+        Serial.println("WARNMode");
+        WARNMode();
+        break;
+      case 2:    // LEFT TRIGGER
+        Serial.println("LEFTMode");
+        LEFTMode();
+        break;
+      case 4:    // RIGHT TRIGGER
+        Serial.println("RIGHTMode");
+        RIGHTMode();
+	   case 6:    // CENTER TRIGGER
+        Serial.println("CENTERMode");
+        CENTERMode();
+		case 3:    // LEFT TRIGGER
+        Serial.println("LEFTMode");
+        LEFTMode();
+	   case 5:    // RIGHT TRIGGER
+        Serial.println("RIGHTMode");
+        RIGHTMode();
+		case 7:    // CENTER TRIGGER
+        Serial.println("CENTERMode");
+        CENTERMode();}
+			
+}
+}
+}
