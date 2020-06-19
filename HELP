@@ -1,0 +1,75 @@
+const int TopButton = PA15;    // Button A - For Top Out
+const int TopLed = PA4;      // LED A, When 1 button pushed, this is corrisponds to A.
+const int MidButton = PA12;    //"" But B
+const int MidLed = PA5;  // ""But B
+byte Stateread = 0;// Keeps track of buttons pushed
+
+void A()
+{
+  digitalWrite(TopLed, HIGH);
+  digitalWrite(MidLed, LOW);
+
+}
+
+
+void AB()
+{
+  digitalWrite(TopLed, HIGH);
+  digitalWrite(MidLed, HIGH);
+
+}
+
+
+void B() {
+  digitalWrite(TopLed, LOW);
+  digitalWrite(MidLed, HIGH);
+
+}
+
+void setup() {
+  pinMode(TopButton, INPUT_PULLUP);
+  pinMode(TopLed, OUTPUT);
+  pinMode(MidButton, INPUT_PULLUP);
+  pinMode(MidLed, OUTPUT);
+  Serial.begin(9600);
+  AB();
+
+}
+
+void loop(){
+
+  if (digitalRead(TopButton) || digitalRead(MidButton) == LOW) {   
+    Stateread = 0;
+    if (digitalRead(TopButton) == LOW) {  //If A reads HIGH, then add 2 to the Stateread variable
+      Stateread = Stateread + 2;
+    }
+    if (digitalRead(MidButton) == LOW) {  //If B reads HIGH, then add 4 to the Stateread variable
+      Stateread = Stateread + 4;
+    }
+
+    // do something different depending on the range value:
+   switch(Stateread) {
+   case 2:   // top button
+     // do something
+     Serial.println("A");
+        A();
+     break;
+   case 4:   // mid button
+     // do something
+       Serial.println("B");
+        B();
+     break;
+   case 6:   // top AND mid button
+     // do something
+       Serial.println("AB");
+        AB();
+     break;
+   default:   // some other combination, or NO buttons
+     // do something
+     digitalWrite(TopLed, LOW);
+     digitalWrite(MidLed, LOW);
+
+    delay(10);  // delay in between reads for stability
+  }
+}
+}
